@@ -1,4 +1,4 @@
-import * as AtProtoAPI from "@atproto/api";
+import { AppBskyFeedDefs } from "@atproto/api";
 import type { FlattenedComment, PostRecord } from "../types";
 
 
@@ -42,7 +42,7 @@ export type ProcessRepliesOptions = {
 };
 
 export function processReplies(
-  replies: AtProtoAPI.AppBskyFeedDefs.ThreadViewPost["replies"],
+  replies: AppBskyFeedDefs.ThreadViewPost["replies"],
   parentAuthorDid?: string,
   depth: number = 0,
   options: ProcessRepliesOptions = {},
@@ -58,7 +58,7 @@ export function processReplies(
 
   for (const reply of replies) {
     // Skip blocked or not found posts
-    if (!AtProtoAPI.AppBskyFeedDefs.isThreadViewPost(reply)) continue;
+    if (!AppBskyFeedDefs.isThreadViewPost(reply)) continue;
 
     const post = reply.post;
     const author = post.author;

@@ -1,5 +1,5 @@
 import { ref, computed } from "vue";
-import * as AtProtoAPI from "@atproto/api";
+import { AtpAgent, AppBskyFeedDefs } from "@atproto/api";
 import type { FlattenedComment, PostStats, BlueskyCommentsResult, ThreadViewPost } from "../types";
 
 import {
@@ -9,7 +9,7 @@ import {
   type ProcessRepliesOptions,
 } from "./blueskyComments.logic";
 
-const agent = new AtProtoAPI.AtpAgent({
+const agent = new AtpAgent({
   service: "https://public.api.bsky.app",
 });
 
@@ -22,7 +22,7 @@ export function useBlueskyComments(
 ): BlueskyCommentsResult {
   const loading = ref(true);
   const error = ref<string | null>(null);
-  const post = ref<AtProtoAPI.AppBskyFeedDefs.PostView | null>(null);
+  const post = ref<AppBskyFeedDefs.PostView | null>(null);
   const comments = ref<FlattenedComment[]>([]);
   const stats = ref<PostStats>({
     likeCount: 0,
@@ -76,12 +76,12 @@ export function useBlueskyComments(
 
       const { data } = response;
 
-      if (!AtProtoAPI.AppBskyFeedDefs.isThreadViewPost(data.thread)) {
+      if (!AppBskyFeedDefs.isThreadViewPost(data.thread)) {
         // Check if it's a blocked or not found post
-        if (AtProtoAPI.AppBskyFeedDefs.isBlockedPost(data.thread)) {
+        if (AppBskyFeedDefs.isBlockedPost(data.thread)) {
           throw new Error("This post is from a blocked account");
         }
-        if (AtProtoAPI.AppBskyFeedDefs.isNotFoundPost(data.thread)) {
+        if (AppBskyFeedDefs.isNotFoundPost(data.thread)) {
           throw new Error(`Post not found: ${uri}`);
         }
         throw new Error("Post not found or not accessible");
