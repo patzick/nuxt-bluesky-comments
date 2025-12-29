@@ -1,6 +1,8 @@
 import { ref, computed } from "vue";
-import { AtpAgent, AppBskyFeedDefs } from "@atproto/api";
+import * as AtProtoAPI from "@atproto/api";
 import type { FlattenedComment, PostStats, BlueskyCommentsResult, ThreadViewPost } from "../types";
+
+const { AtpAgent, AppBskyFeedDefs } = AtProtoAPI;
 import {
   parseBlueskyUrl,
   processReplies,
@@ -21,7 +23,7 @@ export function useBlueskyComments(
 ): BlueskyCommentsResult {
   const loading = ref(true);
   const error = ref<string | null>(null);
-  const post = ref<AppBskyFeedDefs.PostView | null>(null);
+  const post = ref<AtProtoAPI.AppBskyFeedDefs.PostView | null>(null);
   const comments = ref<FlattenedComment[]>([]);
   const stats = ref<PostStats>({
     likeCount: 0,

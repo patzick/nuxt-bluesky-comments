@@ -1,6 +1,6 @@
 {
   "name": "nuxt-bluesky-comments",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt module to display Bluesky post comments on your website",
   "keywords": [
     "atproto",

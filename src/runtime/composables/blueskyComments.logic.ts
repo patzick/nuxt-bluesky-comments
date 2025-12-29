@@ -1,5 +1,7 @@
-import { AppBskyFeedDefs } from "@atproto/api";
+import * as AtProtoAPI from "@atproto/api";
 import type { FlattenedComment, PostRecord } from "../types";
+
+const { AppBskyFeedDefs } = AtProtoAPI;
 
 /**
  * Parse a Bluesky web URL into handle/DID and rkey.
@@ -41,7 +43,7 @@ export type ProcessRepliesOptions = {
 };
 
 export function processReplies(
-  replies: AppBskyFeedDefs.ThreadViewPost["replies"],
+  replies: AtProtoAPI.AppBskyFeedDefs.ThreadViewPost["replies"],
   parentAuthorDid?: string,
   depth: number = 0,
   options: ProcessRepliesOptions = {},
