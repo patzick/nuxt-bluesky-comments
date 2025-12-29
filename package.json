@@ -1,0 +1,67 @@
+{
+  "name": "nuxt-bluesky-comments",
+  "version": "0.1.0",
+  "description": "Nuxt module to display Bluesky post comments on your website",
+  "keywords": [
+    "atproto",
+    "bluesky",
+    "comments",
+    "nuxt",
+    "nuxt-module",
+    "social"
+  ],
+  "license": "MIT",
+  "author": "Patryk Tomczyk <patzick.dev>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patzick/nuxt-bluesky-comments.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "pnpm -C playground dev",
+    "dev:build": "pnpm -C playground build",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && (cd playground && nuxi prepare)",
+    "release": "npm run prepack && npm publish",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint --fix",
+    "format": "oxfmt",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@atproto/api": "0.18.8",
+    "@nuxt/kit": "4.2.2"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "1.0.2",
+    "@nuxt/schema": "4.2.2",
+    "@types/node": "24.3.0",
+    "@unocss/nuxt": "66.5.10",
+    "nuxt": "4.2.2",
+    "oxfmt": "0.21.0",
+    "oxlint": "1.36.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.16",
+    "vue-tsc": "3.2.1"
+  },
+  "peerDependencies": {
+    "@unocss/nuxt": ">=66.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@unocss/nuxt": {
+      "optional": true
+    }
+  }
+}
