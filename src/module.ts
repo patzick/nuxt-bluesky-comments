@@ -12,7 +12,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     apiService: "https://public.api.bsky.app",
   },
-  async setup(_options, nuxt) {
+  async setup(_options) {
     const resolver = createResolver(import.meta.url);
 
     // Register components
@@ -30,8 +30,6 @@ export default defineNuxtModule<ModuleOptions>({
       from: resolver.resolve("./runtime/composables/useBlueskyComments"),
     });
 
-    // Ensure @atproto/api is transpiled
-    nuxt.options.build.transpile.push("@atproto/api");
   },
 });
 
