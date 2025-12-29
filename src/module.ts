@@ -29,12 +29,6 @@ export default defineNuxtModule<ModuleOptions>({
       as: "useBlueskyComments",
       from: resolver.resolve("./runtime/composables/useBlueskyComments"),
     });
-
-    nuxt.options.build.transpile.push("@atproto/api");
-    // Inline for Nitro (so it works server-side in Vercel, etc.)
-    nuxt.options.nitro.externals ||= {};
-    nuxt.options.nitro.externals.inline ||= [];
-    nuxt.options.nitro.externals.inline.push("@atproto/api");
   },
 });
 

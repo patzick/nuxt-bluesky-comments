@@ -1,5 +1,5 @@
 import { ref, computed } from "vue";
-import { AtpAgent, AppBskyFeedDefs } from "@atproto/api";
+import type { AppBskyFeedDefs } from "@atproto/api";
 import type { FlattenedComment, PostStats, BlueskyCommentsResult, ThreadViewPost } from "../types";
 
 import {
@@ -8,10 +8,7 @@ import {
   uriToUrl,
   type ProcessRepliesOptions,
 } from "./blueskyComments.logic";
-
-const agent = new AtpAgent({
-  service: "https://public.api.bsky.app",
-});
+import { getAtpAgent, loadAtproto } from "./atproto";
 
 /**
  * Composable to fetch and manage Bluesky comments
@@ -52,6 +49,7 @@ export function useBlueskyComments(
     }
 
     // Resolve handle to DID
+    const agent = await getAtpAgent();
     const { data } = await agent.resolveHandle({ handle: identifier });
     return `at://${data.did}/app.bsky.feed.post/${rkey}`;
   }
@@ -61,7 +59,9 @@ export function useBlueskyComments(
     error.value = null;
 
     try {
-      const uri = await resolveUri(uriOrUrl);
+      const [uri, { AppBskyFeedDefs }] = await Promise.all([resolveUri(uriOrUrl), loadAtproto()]);
+
+      const agent = await getAtpAgent();
 
       // Fetch the full thread with maximum depth
       const response = await agent.getPostThread({
@@ -101,8 +101,8 @@ export function useBlueskyComments(
       // Set post URL
       postUrl.value = uriToUrl(uri, thread.post.author.handle);
 
-      // Process replies
-      comments.value = processReplies(thread.replies, thread.post.author.did, 0, options);
+      // Process replies - now async since it needs to load the module
+      comments.value = await processReplies(thread.replies, thread.post.author.did, 0, options);
     } catch (e) {
       error.value =
         e instanceof Error

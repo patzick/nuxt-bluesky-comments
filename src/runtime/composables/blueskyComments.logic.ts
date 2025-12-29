@@ -1,6 +1,6 @@
-import { AppBskyFeedDefs } from "@atproto/api";
+import type { AppBskyFeedDefs } from "@atproto/api";
 import type { FlattenedComment, PostRecord } from "../types";
-
+import { loadAtproto } from "./atproto";
 
 /**
  * Parse a Bluesky web URL into handle/DID and rkey.
@@ -41,14 +41,15 @@ export type ProcessRepliesOptions = {
   flattenSameAuthorThreads?: boolean;
 };
 
-export function processReplies(
+export async function processReplies(
   replies: AppBskyFeedDefs.ThreadViewPost["replies"],
   parentAuthorDid?: string,
   depth: number = 0,
   options: ProcessRepliesOptions = {},
-): FlattenedComment[] {
+): Promise<FlattenedComment[]> {
   if (!replies || replies.length === 0) return [];
 
+  const { AppBskyFeedDefs } = await loadAtproto();
   const flattenSameAuthorThreads = options.flattenSameAuthorThreads ?? true;
 
   const groups: Array<{
@@ -88,7 +89,7 @@ export function processReplies(
 
     // Process nested replies
     if (reply.replies && reply.replies.length > 0) {
-      const nestedReplies = processReplies(reply.replies, author.did, depth + 1, options);
+      const nestedReplies = await processReplies(reply.replies, author.did, depth + 1, options);
 
       if (flattenSameAuthorThreads) {
         // Promote same-author continuations to this level (as siblings of `comment`)
