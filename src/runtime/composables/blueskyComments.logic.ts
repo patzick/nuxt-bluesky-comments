@@ -1,8 +1,6 @@
 import * as AtProtoAPI from "@atproto/api";
 import type { FlattenedComment, PostRecord } from "../types";
 
-const { AppBskyFeedDefs } = AtProtoAPI;
-
 /**
  * Parse a Bluesky web URL into handle/DID and rkey.
  */
@@ -59,7 +57,7 @@ export function processReplies(
 
   for (const reply of replies) {
     // Skip blocked or not found posts
-    if (!AppBskyFeedDefs.isThreadViewPost(reply)) continue;
+    if (!AtProtoAPI.AppBskyFeedDefs.isThreadViewPost(reply)) continue;
 
     const post = reply.post;
     const author = post.author;
