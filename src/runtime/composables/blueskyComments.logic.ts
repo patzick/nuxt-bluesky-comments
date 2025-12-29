@@ -8,7 +8,10 @@ export function parseBlueskyUrl(url: string): { identifier: string; rkey: string
   const match = url.match(/https?:\/\/bsky\.app\/profile\/([^/]+)\/post\/([^/?#]+)/);
   if (!match) return null;
 
-  const [, identifier, rkey] = match;
+  const identifier = match[1];
+  const rkey = match[2];
+  if (!identifier || !rkey) return null;
+
   return { identifier, rkey };
 }
 
