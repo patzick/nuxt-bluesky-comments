@@ -30,6 +30,7 @@
   },
   "scripts": {
     "prepack": "nuxt-module-build build",
+    "build": "cd ./playground && pnpm build",
     "dev": "pnpm -C playground dev",
     "dev:build": "pnpm -C playground build",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && (cd playground && nuxi prepare)",
