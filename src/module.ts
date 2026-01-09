@@ -12,7 +12,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     apiService: "https://public.api.bsky.app",
   },
-  async setup(_options, nuxt) {
+  async setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url);
 
     // Register components

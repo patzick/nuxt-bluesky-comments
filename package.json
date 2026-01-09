@@ -29,6 +29,7 @@
     }
   },
   "scripts": {
+    "changeset": "changeset",
     "prepack": "nuxt-module-build build",
     "build": "cd ./playground && pnpm build",
     "dev": "pnpm -C playground dev",
@@ -39,17 +40,24 @@
     "lint": "oxlint --fix",
     "format": "oxfmt",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "bump": "changeset version",
+    "postbump": "pnpm i && pnpm format && pnpm run versionReadme",
+    "versionReadme": "esno scripts/addChangelogBodyToReadmeFile.ts"
   },
   "dependencies": {
     "@nuxt/kit": "4.2.2"
   },
   "devDependencies": {
     "@atproto/api": "0.18.8",
+    "@changesets/changelog-github": "0.5.2",
+    "@changesets/cli": "2.29.8",
     "@nuxt/module-builder": "1.0.2",
     "@nuxt/schema": "4.2.2",
     "@types/node": "24.3.0",
     "@unocss/nuxt": "66.5.10",
+    "changelog-parser": "3.0.1",
+    "esno": "4.8.0",
     "nuxt": "4.2.2",
     "oxfmt": "0.21.0",
     "oxlint": "1.36.0",

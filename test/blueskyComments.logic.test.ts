@@ -1,13 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 
-// We mock @atproto/api typeguards so we can feed minimal objects into processReplies
-vi.mock("@atproto/api", () => {
+// We mock the atproto loader to return our mocked AppBskyFeedDefs
+vi.mock("../src/runtime/composables/atproto", () => {
   return {
-    AppBskyFeedDefs: {
-      isThreadViewPost: (v: unknown): v is { post: unknown; replies?: unknown[] } => {
-        return typeof v === "object" && v !== null && "post" in v;
-      },
-    },
+    loadAtproto: vi.fn(async () => {
+      return {
+        AppBskyFeedDefs: {
+          isThreadViewPost: (v: unknown): v is { post: unknown; replies?: unknown[] } => {
+            return typeof v === "object" && v !== null && "post" in v;
+          },
+        },
+      };
+    }),
   };
 });
 
@@ -80,12 +84,12 @@ describe("blueskyComments.logic", () => {
     );
   });
 
-  it("processReplies: sorts siblings by engagement (likes + replies) desc", () => {
+  it("processReplies: sorts siblings by engagement (likes + replies) desc", async () => {
     const a = tvp("did:a", "a", { like: 1, reply: 1 }); // 2
     const b = tvp("did:b", "b", { like: 5, reply: 0 }); // 5
     const c = tvp("did:c", "c", { like: 0, reply: 3 }); // 3
 
-    const out = processReplies(
+    const out = await processReplies(
       [a, b, c] as unknown as Parameters<typeof processReplies>[0],
       "did:root",
       0,
@@ -93,7 +97,7 @@ describe("blueskyComments.logic", () => {
     expect(out.map((x) => x.id)).toEqual(["b", "c", "a"]);
   });
 
-  it("processReplies: when enabled, promotes same-author continuations to same level (no wrapping)", () => {
+  it("processReplies: when enabled, promotes same-author continuations to same level (no wrapping)", async () => {
     // Parent author is did:p
     // did:a replies (a1), then a1 has a reply by did:a (a2) and a2 has a reply by did:a (a3).
     // With flatten enabled, a3 becomes a sibling of a2 (both under a1), not nested inside a2.
@@ -102,7 +106,7 @@ describe("blueskyComments.logic", () => {
     const a2 = tvp("did:a", "a2", { replies: [a3, b1] });
     const a1 = tvp("did:a", "a1", { replies: [a2] });
 
-    const out = processReplies(
+    const out = await processReplies(
       [a1] as unknown as Parameters<typeof processReplies>[0],
       "did:p",
       0,
@@ -116,13 +120,13 @@ describe("blueskyComments.logic", () => {
     expect(out[2]?.replies).toEqual([]);
   });
 
-  it("processReplies: when disabled, keeps same-author continuations nested", () => {
+  it("processReplies: when disabled, keeps same-author continuations nested", async () => {
     const a3 = tvp("did:a", "a3", { like: 100, reply: 0 });
     const b1 = tvp("did:b", "b1", { like: 1, reply: 0 });
     const a2 = tvp("did:a", "a2", { replies: [a3, b1] });
     const a1 = tvp("did:a", "a1", { replies: [a2] });
 
-    const out = processReplies(
+    const out = await processReplies(
       [a1] as unknown as Parameters<typeof processReplies>[0],
       "did:p",
       0,

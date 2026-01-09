@@ -125,7 +125,7 @@ UserA: "Great post!"
   └─ UserB: "One more thing..."
 ```
 
-## Blog Integration
+## Blog Integration with [nuxt-content](https://content.nuxt.com/)
 
 Add `blueskyUrl` to your frontmatter:
 
