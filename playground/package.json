@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@nuxt/fonts": "0.12.1",
-    "@unocss/nuxt": "66.5.10",
+    "@unocss/nuxt": "66.5.12",
     "nuxt": "4.2.2"
   }
 }
