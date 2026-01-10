@@ -163,3 +163,14 @@ Inspired by Emily Liu's blog post [Using Bluesky posts as blog comments](https:/
 ## License
 
 MIT License © Patryk Tomczyk
+<!-- AUTO GENERATED CHANGELOG -->
+
+## Changelog
+
+Full changelog for stable version is available [here](https://github.com/patzick/nuxt-bluesky-comments/blob/main/CHANGELOG.md)
+
+### Latest changes: 0.1.6
+
+### Patch Changes
+
+- [`b2ad7e5`](https://github.com/patzick/nuxt-bluesky-comments/commit/b2ad7e5e84c46ee51c706ffc6e6fa6db26fc4081) Thanks [@patzick](https://github.com/patzick)! - Initialize changesets
