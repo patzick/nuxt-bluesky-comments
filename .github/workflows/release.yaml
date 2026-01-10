@@ -29,6 +29,9 @@ jobs:
       - name: install
         run: pnpm install --frozen-lockfile --prefer-offline
 
+      - name: Prepare
+        run: pnpm dev:prepare
+
       - name: Build
         run: pnpm prepack
 
