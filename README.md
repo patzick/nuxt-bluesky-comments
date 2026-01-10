@@ -5,6 +5,8 @@
 
 A Nuxt module to display Bluesky post comments on your website. Perfect for adding a comments section to your blog powered by Bluesky discussions.
 
+**[Live Demo](https://nuxt-bluesky-comments.patzick.workers.dev)** - Try it out with real Bluesky posts!
+
 ## Features
 
 - 🦋 Display comments from any public Bluesky post

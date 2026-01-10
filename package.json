@@ -12,6 +12,7 @@
   ],
   "license": "MIT",
   "author": "Patryk Tomczyk <patzick.dev>",
+  "homepage": "https://nuxt-bluesky-comments.patzick.workers.dev",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/patzick/nuxt-bluesky-comments.git"
@@ -49,21 +50,21 @@
     "@nuxt/kit": "4.2.2"
   },
   "devDependencies": {
-    "@atproto/api": "0.18.8",
+    "@atproto/api": "0.18.13",
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "2.29.8",
     "@nuxt/module-builder": "1.0.2",
     "@nuxt/schema": "4.2.2",
     "@types/node": "24.3.0",
-    "@unocss/nuxt": "66.5.10",
+    "@unocss/nuxt": "66.5.12",
     "changelog-parser": "3.0.1",
     "esno": "4.8.0",
     "nuxt": "4.2.2",
-    "oxfmt": "0.21.0",
-    "oxlint": "1.36.0",
+    "oxfmt": "0.23.0",
+    "oxlint": "1.38.0",
     "typescript": "5.9.3",
     "vitest": "4.0.16",
-    "vue-tsc": "3.2.1"
+    "vue-tsc": "3.2.2"
   },
   "peerDependencies": {
     "@unocss/nuxt": ">=66.0.0"
