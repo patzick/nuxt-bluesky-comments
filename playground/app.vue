@@ -9,9 +9,8 @@ const router = useRouter();
 // Theme
 const isDark = ref(false);
 
-const themeClass = computed(() => isDark.value
-  ? 'bg-neutral-950 text-white dark'
-  : 'bg-neutral-50 text-neutral-900'
+const themeClass = computed(() =>
+  isDark.value ? "bg-neutral-950 text-white dark" : "bg-neutral-50 text-neutral-900",
 );
 
 function toggleTheme() {
@@ -19,19 +18,27 @@ function toggleTheme() {
 }
 
 // Sync dark mode with html class for global styling and UnoCSS dark: support
-watch(isDark, (val) => {
-  if (typeof document !== 'undefined') {
-    if (val) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+watch(
+  isDark,
+  (val) => {
+    if (typeof document !== "undefined") {
+      if (val) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
-  }
-}, { immediate: true });
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   // Check system preference if no preference is set (optional, but good for UX)
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !route.query.theme) {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches &&
+    !route.query.theme
+  ) {
     // isDark.value = true;
   }
 });
@@ -39,7 +46,8 @@ onMounted(() => {
 // Settings panel
 const showSettings = ref(false);
 const settings = ref<PlaygroundSettingsPayload>({
-  fontFamily: '"Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial',
+  fontFamily:
+    '"Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial',
   flattenSameAuthorThreads: true,
   bskyStyle: {},
 });
@@ -130,7 +138,9 @@ function loadSample(url: string) {
               target="_blank"
               rel="noopener noreferrer"
               class="transition-colors underline decoration-sky-500/30 underline-offset-2"
-              :class="isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'"
+              :class="
+                isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'
+              "
               >Patryk Tomczyk</a
             >
             <span :class="isDark ? 'text-white/30' : 'text-neutral-400'"> • </span>
@@ -139,7 +149,9 @@ function loadSample(url: string) {
               target="_blank"
               rel="noopener noreferrer"
               class="transition-colors underline decoration-sky-500/30 underline-offset-2"
-              :class="isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'"
+              :class="
+                isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'
+              "
               >@patzick.dev</a
             >
           </p>
@@ -152,16 +164,14 @@ function loadSample(url: string) {
             target="_blank"
             rel="noopener noreferrer"
             class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer border"
-            :class="isDark
-              ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
-              : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50'"
+            :class="
+              isDark
+                ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
+                : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50'
+            "
             title="View on GitHub"
           >
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path
                 fill-rule="evenodd"
                 d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
@@ -174,9 +184,13 @@ function loadSample(url: string) {
           <button
             @click="showSettings = !showSettings"
             class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer border"
-            :class="showSettings
-              ? 'bg-sky-500 border-sky-500 text-white'
-              : (isDark ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20' : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50')"
+            :class="
+              showSettings
+                ? 'bg-sky-500 border-sky-500 text-white'
+                : isDark
+                  ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
+                  : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50'
+            "
             :title="showSettings ? 'Close settings' : 'Open settings'"
           >
             <svg
@@ -203,9 +217,11 @@ function loadSample(url: string) {
           <button
             @click="toggleTheme"
             class="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer border"
-            :class="isDark
-              ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
-              : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50'"
+            :class="
+              isDark
+                ? 'bg-white/5 border-white/10 text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
+                : 'bg-white border-neutral-200 text-sky-900/60 hover:text-sky-600 hover:border-sky-200 hover:bg-sky-50'
+            "
             :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
           >
             <svg
@@ -248,9 +264,11 @@ function loadSample(url: string) {
         </p>
         <div
           class="flex items-center gap-2 px-4 h-12 rounded-xl border transition-all duration-200"
-          :class="isDark
-          ? 'bg-white/[0.03] border-white/10 focus-within:border-sky-500/50 focus-within:bg-white/[0.06]'
-          : 'bg-white border-neutral-200 focus-within:border-sky-500 shadow-sm'"
+          :class="
+            isDark
+              ? 'bg-white/[0.03] border-white/10 focus-within:border-sky-500/50 focus-within:bg-white/[0.06]'
+              : 'bg-white border-neutral-200 focus-within:border-sky-500 shadow-sm'
+          "
         >
           <svg
             class="w-4 h-4 shrink-0"
@@ -271,16 +289,22 @@ function loadSample(url: string) {
             :value="postUrl"
             placeholder="Paste a bsky.app post URL..."
             class="flex-1 bg-transparent outline-none text-sm"
-            :class="isDark ? 'text-white placeholder-white/20' : 'text-neutral-900 placeholder-neutral-400'"
+            :class="
+              isDark
+                ? 'text-white placeholder-white/20'
+                : 'text-neutral-900 placeholder-neutral-400'
+            "
             @input="onInput"
           />
           <button
             v-if="postUrl"
             @click="clearUrl"
             class="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 cursor-pointer border"
-            :class="isDark
-              ? 'text-sky-300/50 bg-sky-400/5 border-sky-400/10 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20'
-              : 'text-sky-950/40 bg-sky-50 border-sky-100 hover:text-red-600 hover:bg-red-50 hover:border-red-200'"
+            :class="
+              isDark
+                ? 'text-sky-300/50 bg-sky-400/5 border-sky-400/10 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20'
+                : 'text-sky-950/40 bg-sky-50 border-sky-100 hover:text-red-600 hover:bg-red-50 hover:border-red-200'
+            "
           >
             <svg
               class="w-5 h-5"
@@ -308,8 +332,10 @@ function loadSample(url: string) {
             :class="[
               isDark ? 'bg-white/[0.02] border-white/5' : 'bg-white border-neutral-200 shadow-sm',
               postUrl === sample.url
-                ? (isDark ? 'ring-1 ring-sky-500/50 bg-white/[0.05] border-sky-500/20' : 'ring-1 ring-sky-500 bg-sky-50/50')
-                : ''
+                ? isDark
+                  ? 'ring-1 ring-sky-500/50 bg-white/[0.05] border-sky-500/20'
+                  : 'ring-1 ring-sky-500 bg-sky-50/50'
+                : '',
             ]"
           >
             <span class="text-sm truncate" :class="isDark ? 'text-white/70' : 'text-neutral-600'">
@@ -318,11 +344,15 @@ function loadSample(url: string) {
             <button
               @click="loadSample(sample.url)"
               class="shrink-0 text-xs font-bold px-4 py-2 rounded-xl transition-all duration-200 cursor-pointer"
-              :class="postUrl === sample.url
-                ? 'bg-sky-500 text-white'
-                : (isDark ? 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/5' : 'bg-white border border-neutral-200 text-sky-900/60 hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50')"
+              :class="
+                postUrl === sample.url
+                  ? 'bg-sky-500 text-white'
+                  : isDark
+                    ? 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/5'
+                    : 'bg-white border border-neutral-200 text-sky-900/60 hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50'
+              "
             >
-              {{ postUrl === sample.url ? 'Active' : 'Load' }}
+              {{ postUrl === sample.url ? "Active" : "Load" }}
             </button>
           </div>
         </div>
@@ -330,43 +360,73 @@ function loadSample(url: string) {
 
       <!-- Getting Started -->
       <div class="mb-10">
-        <p class="text-xs mb-3 font-semibold" :class="isDark ? 'text-white/60' : 'text-neutral-700'">
+        <p
+          class="text-xs mb-3 font-semibold"
+          :class="isDark ? 'text-white/60' : 'text-neutral-700'"
+        >
           Getting Started
         </p>
         <div
           class="rounded-xl border p-4"
-          :class="isDark ? 'bg-white/[0.02] border-white/5' : 'bg-white border-neutral-200 shadow-sm'"
+          :class="
+            isDark ? 'bg-white/[0.02] border-white/5' : 'bg-white border-neutral-200 shadow-sm'
+          "
         >
           <div class="space-y-3">
             <div>
-              <p class="text-xs font-medium mb-1.5" :class="isDark ? 'text-white/70' : 'text-neutral-600'">
+              <p
+                class="text-xs font-medium mb-1.5"
+                :class="isDark ? 'text-white/70' : 'text-neutral-600'"
+              >
                 1. Install the package
               </p>
               <code
                 class="block px-3 py-2 rounded-lg text-xs font-mono"
-                :class="isDark ? 'bg-white/5 text-sky-300 border border-white/5' : 'bg-neutral-50 text-sky-700 border border-neutral-200'"
+                :class="
+                  isDark
+                    ? 'bg-white/5 text-sky-300 border border-white/5'
+                    : 'bg-neutral-50 text-sky-700 border border-neutral-200'
+                "
               >
                 pnpm add nuxt-bluesky-comments
               </code>
             </div>
             <div>
-              <p class="text-xs font-medium mb-1.5" :class="isDark ? 'text-white/70' : 'text-neutral-600'">
-                2. Add to your <code class="px-1 py-0.5 rounded text-[10px] font-mono" :class="isDark ? 'bg-white/5 text-sky-300' : 'bg-neutral-100 text-sky-700'">nuxt.config.ts</code>
+              <p
+                class="text-xs font-medium mb-1.5"
+                :class="isDark ? 'text-white/70' : 'text-neutral-600'"
+              >
+                2. Add to your
+                <code
+                  class="px-1 py-0.5 rounded text-[10px] font-mono"
+                  :class="isDark ? 'bg-white/5 text-sky-300' : 'bg-neutral-100 text-sky-700'"
+                  >nuxt.config.ts</code
+                >
               </p>
               <code
                 class="block px-3 py-2 rounded-lg text-xs font-mono whitespace-pre-wrap"
-                :class="isDark ? 'bg-white/5 text-sky-300 border border-white/5' : 'bg-neutral-50 text-sky-700 border border-neutral-200'"
-              >export default defineNuxtConfig({
-  modules: ['nuxt-bluesky-comments'],
-})</code>
+                :class="
+                  isDark
+                    ? 'bg-white/5 text-sky-300 border border-white/5'
+                    : 'bg-neutral-50 text-sky-700 border border-neutral-200'
+                "
+                >export default defineNuxtConfig({ modules: ['nuxt-bluesky-comments'], })</code
+              >
             </div>
             <div>
-              <p class="text-xs font-medium mb-1.5" :class="isDark ? 'text-white/70' : 'text-neutral-600'">
+              <p
+                class="text-xs font-medium mb-1.5"
+                :class="isDark ? 'text-white/70' : 'text-neutral-600'"
+              >
                 3. Use the component
               </p>
               <code
                 class="block px-3 py-2 rounded-lg text-xs font-mono"
-                :class="isDark ? 'bg-white/5 text-sky-300 border border-white/5' : 'bg-neutral-50 text-sky-700 border border-neutral-200'"
+                :class="
+                  isDark
+                    ? 'bg-white/5 text-sky-300 border border-white/5'
+                    : 'bg-neutral-50 text-sky-700 border border-neutral-200'
+                "
               >
                 &lt;BlueskyComments url="..." /&gt;
               </code>
@@ -377,7 +437,9 @@ function loadSample(url: string) {
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
-                :class="isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'"
+                :class="
+                  isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-700'
+                "
               >
                 <svg
                   class="w-3.5 h-3.5"
@@ -449,31 +511,31 @@ body:not(.dark) {
 
 /* Font family declarations to enable @nuxt/fonts auto-loading */
 .font-barlow {
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
 }
 
 .font-inter {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .font-ibm-plex-sans {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 }
 
 .font-roboto {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .font-open-sans {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .font-montserrat {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .font-lato {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .dark-theme {

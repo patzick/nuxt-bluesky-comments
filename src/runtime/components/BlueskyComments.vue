@@ -25,7 +25,7 @@ const props = withDefaults(
   {
     limit: 5,
     flattenSameAuthorThreads: true,
-  }
+  },
 );
 
 // Determine which identifier to use
@@ -41,16 +41,16 @@ const hasIdentifier = computed(() => !!postIdentifier.value);
 // Use the composable to fetch comments
 const { loading, error, comments, stats, postUrl, refresh } = hasIdentifier.value
   ? useBlueskyComments(postIdentifier.value, {
-    flattenSameAuthorThreads: props.flattenSameAuthorThreads,
-  })
+      flattenSameAuthorThreads: props.flattenSameAuthorThreads,
+    })
   : {
-    loading: ref(false),
-    error: ref("No Bluesky post URL or URI provided"),
-    comments: ref([]),
-    stats: ref({ likeCount: 0, repostCount: 0, replyCount: 0, quoteCount: 0 }),
-    postUrl: ref(""),
-    refresh: async () => { },
-  };
+      loading: ref(false),
+      error: ref("No Bluesky post URL or URI provided"),
+      comments: ref([]),
+      stats: ref({ likeCount: 0, repostCount: 0, replyCount: 0, quoteCount: 0 }),
+      postUrl: ref(""),
+      refresh: async () => {},
+    };
 
 // Pagination state
 const showAll = ref(false);
@@ -88,7 +88,7 @@ function formatCount(count: number): string {
 <template>
   <div
     class="bsky-comments"
-    style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--bsky-border, #e5e5e5);"
+    style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--bsky-border, #e5e5e5)"
   >
     <!-- Stats bar -->
     <a

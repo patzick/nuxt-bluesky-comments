@@ -16,7 +16,7 @@ const props = withDefaults(
   {
     depth: 0,
     isLastSibling: false,
-  }
+  },
 );
 
 // Collapse state
@@ -31,14 +31,12 @@ function handleAvatarError() {
 
 // Get the first letter of the handle for avatar placeholder
 const avatarLetter = computed(() => {
-  const handle = props.comment.author.handle || props.comment.author.displayName || '?';
+  const handle = props.comment.author.handle || props.comment.author.displayName || "?";
   return handle.charAt(0).toUpperCase();
 });
 
 // Same-author detection
-const isSameAuthor = computed(
-  () => props.parentAuthorDid === props.comment.author.did
-);
+const isSameAuthor = computed(() => props.parentAuthorDid === props.comment.author.did);
 
 // Should indent this comment (don't indent if same author as parent)
 const shouldIndent = computed(() => props.depth > 0 && !isSameAuthor.value);
@@ -47,15 +45,11 @@ const HIDE_GLOBE_FOR_HANDLE_SUFFIXES = [".bsky.social"] as const;
 
 const shouldShowHandleGlobe = computed(() => {
   const handle = props.comment.author.handle?.toLowerCase() ?? "";
-  return !HIDE_GLOBE_FOR_HANDLE_SUFFIXES.some((suffix) =>
-    handle.endsWith(suffix)
-  );
+  return !HIDE_GLOBE_FOR_HANDLE_SUFFIXES.some((suffix) => handle.endsWith(suffix));
 });
 
 // Has replies
-const hasReplies = computed(
-  () => props.comment.replies && props.comment.replies.length > 0
-);
+const hasReplies = computed(() => props.comment.replies && props.comment.replies.length > 0);
 
 // Is nested comment (has a parent thread)
 const isNested = computed(() => props.depth > 0 && shouldIndent.value);
@@ -80,8 +74,7 @@ const replyItems = computed<ReplyRenderItem[]>(() => {
   return replies.map((reply, index) => ({
     reply,
     isLastIndentedSibling:
-      index === lastIndentedIndex &&
-      reply.author.did !== props.comment.author.did,
+      index === lastIndentedIndex && reply.author.did !== props.comment.author.did,
   }));
 });
 
@@ -89,10 +82,10 @@ const replyItems = computed<ReplyRenderItem[]>(() => {
 const isMainBranchHovered = ref(false);
 
 // Inject parent's hover state and toggle function if we're nested
-const parentHoverState = inject<{ isHovered: typeof isMainBranchHovered; toggleCollapse: () => void } | null>(
-  "parentThreadState",
-  null
-);
+const parentHoverState = inject<{
+  isHovered: typeof isMainBranchHovered;
+  toggleCollapse: () => void;
+} | null>("parentThreadState", null);
 
 // Provide hover state and toggle to children if we have replies
 if (hasReplies.value) {
@@ -169,9 +162,7 @@ function formatRelativeTime(dateString: string): string {
  * Build the Bluesky URL for this comment
  */
 function getCommentUrl(comment: FlattenedComment): string {
-  const match = comment.uri.match(
-    /at:\/\/([^/]+)\/app\.bsky\.feed\.post\/([^/?#]+)/
-  );
+  const match = comment.uri.match(/at:\/\/([^/]+)\/app\.bsky\.feed\.post\/([^/?#]+)/);
   if (!match) return "";
   const [, did, rkey] = match;
   const identifier = comment.author.handle || did;
@@ -183,18 +174,26 @@ const relativeTime = formatRelativeTime(props.comment.createdAt);
 </script>
 
 <template>
-  <div class="bsky-comment" :class="{ 'nested': isNested }">
+  <div class="bsky-comment" :class="{ nested: isNested }">
     <!-- Connection line from nested comment to main branch - overlays without causing indentation -->
     <div
       v-if="isNested"
       class="connection-line-wrapper"
       @click="handleConnectionClick"
-      @mouseenter="() => { if (parentHoverState) parentHoverState.isHovered.value = true; }"
-      @mouseleave="() => { if (parentHoverState) parentHoverState.isHovered.value = false; }"
+      @mouseenter="
+        () => {
+          if (parentHoverState) parentHoverState.isHovered.value = true;
+        }
+      "
+      @mouseleave="
+        () => {
+          if (parentHoverState) parentHoverState.isHovered.value = false;
+        }
+      "
     >
       <svg
         class="connection-svg"
-        :class="{ 'hovered': isConnectedHovered }"
+        :class="{ hovered: isConnectedHovered }"
         width="100%"
         height="100%"
         viewBox="0 0 29 32"
@@ -246,7 +245,7 @@ const relativeTime = formatRelativeTime(props.comment.createdAt);
         <div
           v-if="!collapsed"
           class="thread-line"
-          :class="{ 'hovered': isMainBranchHovered }"
+          :class="{ hovered: isMainBranchHovered }"
           @click="toggleCollapse"
           @mouseenter="isMainBranchHovered = true"
           @mouseleave="isMainBranchHovered = false"
@@ -257,7 +256,7 @@ const relativeTime = formatRelativeTime(props.comment.createdAt);
       <button
         v-if="hasReplies"
         class="thread-toggle-btn"
-        :class="{ 'collapsed': collapsed }"
+        :class="{ collapsed: collapsed }"
         :title="collapsed ? 'Expand replies' : 'Collapse replies'"
         @click="toggleCollapse"
       >
@@ -429,7 +428,7 @@ const relativeTime = formatRelativeTime(props.comment.createdAt);
       <!-- Grid column 2: collapsed indicator -->
       <div v-if="collapsed && hasReplies" class="collapsed-info">
         <button class="collapsed-link" @click="toggleCollapse">
-          {{ totalNestedReplies }} more {{ totalNestedReplies === 1 ? 'reply' : 'replies' }}
+          {{ totalNestedReplies }} more {{ totalNestedReplies === 1 ? "reply" : "replies" }}
         </button>
       </div>
 

@@ -27,7 +27,7 @@ pnpm add nuxt-bluesky-comments
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['nuxt-bluesky-comments'],
+  modules: ["nuxt-bluesky-comments"],
 });
 ```
 
@@ -64,7 +64,7 @@ For custom implementations:
 ```vue
 <script setup>
 const { loading, error, comments, stats, postUrl, refresh } = useBlueskyComments(
-  'https://bsky.app/profile/user.bsky.social/post/abc123'
+  "https://bsky.app/profile/user.bsky.social/post/abc123",
 );
 </script>
 ```

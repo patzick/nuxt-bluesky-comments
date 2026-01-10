@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from "vue";
 
-type FontPresetId = "barlow" | "inter" | "ibmPlexSans" | "roboto" | "openSans" | "montserrat" | "lato" | "system";
+type FontPresetId =
+  | "barlow"
+  | "inter"
+  | "ibmPlexSans"
+  | "roboto"
+  | "openSans"
+  | "montserrat"
+  | "lato"
+  | "system";
 
 type BskyVars = {
   "--bsky-bg": string;
@@ -29,8 +37,8 @@ const emit = defineEmits<{
 // Detect dark mode - prefer prop, fallback to DOM check
 const isDark = computed(() => {
   if (props.isDark !== undefined) return props.isDark;
-  if (typeof document === 'undefined') return false;
-  return document.documentElement.classList.contains('dark');
+  if (typeof document === "undefined") return false;
+  return document.documentElement.classList.contains("dark");
 });
 
 function fontFamilyForPreset(preset: FontPresetId): string {
@@ -57,15 +65,15 @@ function fontFamilyForPreset(preset: FontPresetId): string {
 function defaultsForTheme(dark: boolean): BskyVars {
   return dark
     ? {
-      "--bsky-bg": "#0a0a0a",
-      "--bsky-border": "rgba(255, 255, 255, 0.1)",
-      "--bsky-link": "#38bdf8",
-    }
+        "--bsky-bg": "#0a0a0a",
+        "--bsky-border": "rgba(255, 255, 255, 0.1)",
+        "--bsky-link": "#38bdf8",
+      }
     : {
-      "--bsky-bg": "#fafafa",
-      "--bsky-border": "#e5e5e5",
-      "--bsky-link": "#0284c7",
-    };
+        "--bsky-bg": "#fafafa",
+        "--bsky-border": "#e5e5e5",
+        "--bsky-link": "#0284c7",
+      };
 }
 
 const fontPreset = ref<FontPresetId>("roboto");
@@ -73,14 +81,11 @@ const flattenSameAuthorThreads = ref(true);
 const syncVarsWithTheme = ref(true);
 const bskyVars = reactive<BskyVars>(defaultsForTheme(isDark.value));
 
-watch(
-  isDark,
-  (dark) => {
-    if (syncVarsWithTheme.value) {
-      Object.assign(bskyVars, defaultsForTheme(dark));
-    }
+watch(isDark, (dark) => {
+  if (syncVarsWithTheme.value) {
+    Object.assign(bskyVars, defaultsForTheme(dark));
   }
-);
+});
 
 function resetVarsToThemeDefaults() {
   Object.assign(bskyVars, defaultsForTheme(isDark.value));
@@ -98,7 +103,7 @@ watch(
       bskyStyle: bskyStyle.value,
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 type ParsedCssColor = {
@@ -127,7 +132,12 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const raw = hex.replace("#", "").trim();
   if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(raw)) return null;
   const full =
-    raw.length === 3 ? raw.split("").map((c) => `${c}${c}`).join("") : raw;
+    raw.length === 3
+      ? raw
+          .split("")
+          .map((c) => `${c}${c}`)
+          .join("")
+      : raw;
   const r = Number.parseInt(full.slice(0, 2), 16);
   const g = Number.parseInt(full.slice(2, 4), 16);
   const b = Number.parseInt(full.slice(4, 6), 16);
@@ -143,7 +153,7 @@ function parseCssColor(value: string): ParsedCssColor | null {
   }
 
   const rgbaMatch = v.match(
-    /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|0?\.\d+|1(\.0+)?)\s*\)$/
+    /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|0?\.\d+|1(\.0+)?)\s*\)$/,
   );
   if (rgbaMatch) {
     const r = Number(rgbaMatch[1]);
@@ -153,9 +163,7 @@ function parseCssColor(value: string): ParsedCssColor | null {
     return { hex: rgbToHex(r, g, b), alpha: a, isRgba: true };
   }
 
-  const rgbMatch = v.match(
-    /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/
-  );
+  const rgbMatch = v.match(/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/);
   if (rgbMatch) {
     const r = Number(rgbMatch[1]);
     const g = Number(rgbMatch[2]);
@@ -208,7 +216,7 @@ const bskyVarEntries = computed(() => {
 <template>
   <div
     class="settings-panel bg-white border-neutral-200 dark:bg-neutral-900 dark:border-white/10"
-    :class="{ 'dark': isDark }"
+    :class="{ dark: isDark }"
   >
     <div class="settings-header">
       <div>
@@ -272,7 +280,11 @@ const bskyVarEntries = computed(() => {
               <input
                 :value="value"
                 class="settings-var-input border-neutral-200 text-neutral-800 dark:border-white/10 dark:text-white/80"
-                @input="(e: Event) => { bskyVars[key] = (e.target as HTMLInputElement).value }"
+                @input="
+                  (e: Event) => {
+                    bskyVars[key] = (e.target as HTMLInputElement).value;
+                  }
+                "
               />
             </div>
             <div v-if="shouldShowAlphaControl(value)" class="settings-alpha">
@@ -283,7 +295,9 @@ const bskyVarEntries = computed(() => {
                 max="100"
                 :value="Math.round(alphaFor(key) * 100)"
                 class="settings-alpha-slider"
-                @input="(e: Event) => setAlpha(key, Number((e.target as HTMLInputElement).value) / 100)"
+                @input="
+                  (e: Event) => setAlpha(key, Number((e.target as HTMLInputElement).value) / 100)
+                "
               />
               <span class="settings-alpha-value"> {{ Math.round(alphaFor(key) * 100) }}% </span>
             </div>
@@ -532,7 +546,6 @@ const bskyVarEntries = computed(() => {
 .dark .settings-reset:hover {
   background-color: #7dd3fc;
 }
-
 
 .settings-vars-grid {
   display: grid;
