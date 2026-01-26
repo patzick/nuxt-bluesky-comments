@@ -11,8 +11,8 @@
     "nuxt-bluesky-comments": "workspace:*"
   },
   "devDependencies": {
-    "@nuxt/fonts": "0.12.1",
+    "@nuxt/fonts": "0.13.0",
     "@unocss/nuxt": "66.6.0",
-    "nuxt": "4.2.2"
+    "nuxt": "4.3.0"
   }
 }
