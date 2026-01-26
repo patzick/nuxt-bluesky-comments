@@ -50,21 +50,21 @@
     "@nuxt/kit": "4.2.2"
   },
   "devDependencies": {
-    "@atproto/api": "0.18.16",
+    "@atproto/api": "0.18.17",
     "@changesets/changelog-github": "0.5.2",
     "@changesets/cli": "2.29.8",
     "@nuxt/module-builder": "1.0.2",
     "@nuxt/schema": "4.2.2",
-    "@types/node": "25.0.9",
+    "@types/node": "25.0.10",
     "@unocss/nuxt": "66.6.0",
     "changelog-parser": "3.0.1",
     "esno": "4.8.0",
     "nuxt": "4.2.2",
-    "oxfmt": "0.25.0",
-    "oxlint": "1.40.0",
+    "oxfmt": "0.27.0",
+    "oxlint": "1.42.0",
     "typescript": "5.9.3",
-    "vitest": "4.0.17",
-    "vue-tsc": "3.2.2"
+    "vitest": "4.0.18",
+    "vue-tsc": "3.2.4"
   },
   "peerDependencies": {
     "@unocss/nuxt": ">=66.0.0"
